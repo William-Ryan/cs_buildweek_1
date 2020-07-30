@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
+import { cpuUsage } from "process";
 
-const numRows = 50;
-const numCols = 50;
+const numRows = 40;
+const numCols = 80;
 
 const operations = [
   [0, 1],
@@ -30,6 +31,7 @@ const App: React.FC = () => {
   });
 
   const [running, setRunning] = useState(false);
+  const [colors] = useState(["red", "blue", "purple", "yellow", "green"])
 
   const runningRef = useRef(running);
   runningRef.current = running;
@@ -65,40 +67,56 @@ const App: React.FC = () => {
     setTimeout(runSimulation, 100);
   }, []);
 
+  const changeBg = () => {
+    const color = colors 
+    if (color.length <= 0){
+      return
+    }
+    else if (color.length > 0){
+      const randomColor = color[Math.floor(Math.random() * color.length)];
+      return randomColor
+    }
+    else {
+      return "blue"
+    }
+  }
+
   return (
     <>
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runSimulation();
-          }
-        }}
-      >
-        {running ? "stop" : "start"}
-      </button>
-      <button
-        onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
-            );
-          }
+      <div>
+        <button
+          onClick={() => {
+            setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              runSimulation();
+            }
+          }}
+        >
+          {running ? "stop" : "start"}
+        </button>
+        <button
+          onClick={() => {
+            const rows = [];
+            for (let i = 0; i < numRows; i++) {
+              rows.push(
+                Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+              );
+            }
 
-          setGrid(rows);
-        }}
-      >
-        random
-      </button>
-      <button
-        onClick={() => {
-          setGrid(generateEmptyGrid());
-        }}
-      >
-        clear
-      </button>
+            setGrid(rows);
+          }}
+        >
+          random
+        </button>
+        <button
+          onClick={() => {
+            setGrid(generateEmptyGrid());
+          }}
+        >
+          clear
+        </button>
+      </div>
       <div
         style={{
           display: "grid",
@@ -118,7 +136,7 @@ const App: React.FC = () => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "pink" : undefined,
+                backgroundColor: grid[i][k] ? changeBg() : undefined,
                 border: "solid 1px black"
               }}
             />
