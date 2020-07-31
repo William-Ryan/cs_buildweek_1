@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
-const numRows = 40;
+const numRows = 38;
 const numCols = 80;
 
 const operations = [
@@ -31,6 +31,9 @@ const App: React.FC = () => {
 
   const [running, setRunning] = useState(false);
   const [colors] = useState(["red", "blue", "purple", "yellow", "green"])
+  const [speed] = useState({
+    rate: 100
+  })
 
   const runningRef = useRef(running);
   runningRef.current = running;
@@ -63,7 +66,7 @@ const App: React.FC = () => {
       });
     });
 
-    setTimeout(runSimulation, 100);
+    setTimeout(runSimulation, speed.rate);
   }, []);
 
   const changeBg = () => {
@@ -99,6 +102,27 @@ const App: React.FC = () => {
           }}
         >
           {running ? "stop" : "start"}
+        </button>
+        <button
+          onClick={() => {
+            speed.rate = 2000
+          }}
+        >
+          slow
+        </button>
+        <button
+          onClick={() => {
+            speed.rate = 1000
+          }}
+        >
+          medium
+        </button>
+        <button
+          onClick={() => {
+            speed.rate = 100
+          }}
+        >
+          fast
         </button>
         <button
           onClick={() => {
@@ -150,7 +174,12 @@ const App: React.FC = () => {
           ))
         )}
       </div>
-      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">What is Game of Life?</a>
+      <div style={{
+        textAlign: "center",
+        margin: "1% 0% 0%"
+      }}>
+        <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">What is Game of Life?</a>
+      </div>
     </div>
   );
 };
