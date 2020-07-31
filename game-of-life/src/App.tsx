@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
-import { cpuUsage } from "process";
 
 const numRows = 40;
 const numCols = 80;
@@ -82,8 +81,14 @@ const App: React.FC = () => {
   }
 
   return (
-    <>
-      <div>
+    <div style={{
+      backgroundColor: "rgb(4,3,20)",
+      backgroundImage: "radial-gradient(circle, rgba(4,3,20,1) 0%, rgba(232,232,204,1) 60%, rgba(0,212,255,1) 100%)",
+      padding: "1.2% 0%"
+    }}>
+      <div style={{
+        textAlign: "center"
+      }}>
         <button
           onClick={() => {
             setRunning(!running);
@@ -120,7 +125,9 @@ const App: React.FC = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`
+          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          background: "white",
+          margin: "0% 8%"
         }}
       >
         {grid.map((rows, i) =>
@@ -136,14 +143,15 @@ const App: React.FC = () => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? changeBg() : undefined,
+                backgroundColor: grid[i][k] ? changeBg() : "white",
                 border: "solid 1px black"
               }}
             />
           ))
         )}
       </div>
-    </>
+      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">What is Game of Life?</a>
+    </div>
   );
 };
 
