@@ -159,10 +159,11 @@ const App: React.FC = () => {
             <div
               key={`${i}-${k}`}
               onClick={() => {
+                if (runningRef.current === false){
                 const newGrid = produce(grid, gridCopy => {
                   gridCopy[i][k] = grid[i][k] ? 0 : 1;
                 });
-                setGrid(newGrid);
+                setGrid(newGrid);}
               }}
               style={{
                 width: 20,
