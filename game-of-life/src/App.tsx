@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
-const numRows = 38;
+const numRows = 39;
 const numCols = 80;
 
 const operations = [
@@ -30,10 +30,13 @@ const App: React.FC = () => {
   });
 
   const [running, setRunning] = useState(false);
+
   const [colors] = useState(["red", "blue", "purple", "yellow", "green"])
+
   const [speed] = useState({
     rate: 100
   })
+
   let [counter, setCounter] = useState(0);
 
   const runningRef = useRef(running);
@@ -157,7 +160,10 @@ const App: React.FC = () => {
           clear
         </button>
       </div>
-      <div>
+      <div style={{
+        textAlign: "center",
+        margin: "0.5% 0%"
+      }}>
         Generation: {counterRef.current}
       </div>
       <div
@@ -193,7 +199,21 @@ const App: React.FC = () => {
         textAlign: "center",
         margin: "1% 0% 0%"
       }}>
-        <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">What is Game of Life?</a>
+        <h2>What is Game of Life?</h2>
+        <br/>
+        <h3>Brief History of Conway's Game of Life</h3>
+        <p>The Game of Life, created by mathematician John Horton Conway, first appeared in the October 1970 edition of Scientific American. The rules of this single-person logic game are very simple, as we'll see below, but often lead to very surprising results. Conway originally recommended playing the game using tokens on a flat game board that was just a square grid. This method is fine for keeping track of starting positions of up to four initial counters and most of the patterns with five counters. However, with more counters this method doesn't work as well.</p>
+        <p>As personal computers became more popular, interest in the playing the electronic game grew, allowing for investigation of increasingly complex initial set-ups. Today there are online communities of players, programmers, and enthusiasts continuing to investigate the complexities these simple rules create. Let's take a closer look.</p>
+        <br/>
+        <h3>Rules for Conway's Game of Life</h3>
+        <p>At the heart of this game are four rules that determine if a cell is live or dead. All depend on how many of that cell's neighbors are alive.</p>
+        <ul>
+          <li>Births: Each dead cell adjacent to exactly three live neighbors will become live in the next generation.</li>
+          <li>Death by isolation: Each live cell with one or fewer live neighbors will die in the next generation.</li>
+          <li>Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation. </li>
+          <li>Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.</li>
+        </ul>
+        <p>Another important fact about the rules for the game of life is that all rules apply to all cells at the same time. </p>
       </div>
     </div>
   );
