@@ -34,9 +34,14 @@ const App: React.FC = () => {
   const [speed] = useState({
     rate: 100
   })
+  let [counter, setCounter] = useState(0);
 
   const runningRef = useRef(running);
   runningRef.current = running;
+
+  const counterRef = useRef(counter);
+  counterRef.current = counter;
+
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -66,7 +71,10 @@ const App: React.FC = () => {
       });
     });
 
-    setTimeout(runSimulation, speed.rate);
+    setTimeout(() => {          
+      runSimulation()
+      setCounter(counterRef.current += 1);
+    }, speed.rate);;
   }, []);
 
   const changeBg = () => {
@@ -141,10 +149,16 @@ const App: React.FC = () => {
         <button
           onClick={() => {
             setGrid(generateEmptyGrid());
+            setTimeout(() => {          
+              setCounter(0);
+              }, 100);
           }}
         >
           clear
         </button>
+      </div>
+      <div>
+        Generation: {counterRef.current}
       </div>
       <div
         style={{
